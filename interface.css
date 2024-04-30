@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f5f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+  }
+  
+  .logo {
+    width: 100px; /* Adjust as needed */
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    /* Add more styling as needed */
+  }
+  
+  /* Add styles for .container, .question, .answer, and .btn as per previous instructions */  
+  .container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .question {
+    background-color: #e8f0fe;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  .question p {
+    margin: 0;
+  }
+  .answer textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 150px;
+    box-sizing: border-box; /* Ensures padding does not add to width */
+  }
+  .btn {
+    display: inline-block;
+    background-color: #1a73e8;
+    color: #fff;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+  }
