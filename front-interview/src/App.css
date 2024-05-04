@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #ffffff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 10px 10px;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  width: 14%;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin-top: 10px;
+}
+
+.nav-links li {
+  padding: 20px;
+}
+
+.nav-links a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #336e95;
+}
+
+.App-header {
+  scroll-margin-top: 200px;
+}
+
+.App-header h1, .App-header p {
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 13%;
+  font-size: 5rem;
+}
+
+.App-header p {
+  font-size: 1.5rem;
+  z-index: 1;
+  margin-top: 0%;
+}
+
+.App-header h1 strong {
+  color: #335495;
+  filter: drop-shadow(0 2px 4px rgba(4, 18, 46, 0.749));
+  filter: brightness(1.5);
+  z-index: 1;
+}
+
+.App-header img {
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: brightness(0.4);
+  clip-path: ellipse(100% 80% at 50% 20%);
+}
+
+#about {
+  scroll-margin-top: 120px;
+}
+
+.App-about {
+  margin-top: 20%;
+  padding: 20px;
+  width: 100%;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+}
+
+.App-about h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #000;
+  display: flex;
+  justify-content: center;
+}
+
+.App-about p {
+  font-size: 1.3rem;
+  color: #000;
+}
+
+.App-about .steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 3%;
+  text-align: center;
+}
+
+.App-about .steps div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App-about .steps .step1,
+.App-about .steps .step2,
+.App-about .steps .step3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 10px;
+}
+
+.App-about .steps .step2 img,
+.App-about .steps .step3 img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  background-color: #fff;
+}
+
+.App-about .steps .step1 img {
+  width: 170px;
+  height: 170px;
+  background-color: #fff;
+}
+
+.App-about span {
+  font-size: 3rem; 
+  color: #122852;
+  align-self: center;
+}
+
+.separator {
+  margin-top: 8%;
+  height: 100px; 
+  background-color: #335495;
+  width: 100%;
+  border-radius: 45% 55% 0 0;
+}
+
+.start-now {
+  background-color: #335495;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.7rem;
+}
+
+.start-now button {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  padding: 10px 20px;
+  background-color: #223b6d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 200px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.start-now button:hover {
+  background-color: #3d5a92;
+  transition: background-color 0.5s;
+}
