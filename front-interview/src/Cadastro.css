@@ -1,10 +1,11 @@
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.login {
+.cadastro {
     background-color: #f8f8f8;
     height: 100vh;
     width: 100%;
@@ -12,9 +13,8 @@
     justify-content: center;
     align-items: center;
 }
-  
 
-.App-login {
+.App-cadastro {
     width: fit-content;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
     padding: 2%;
@@ -29,11 +29,11 @@
     gap: 2rem;
 }
 
-.App-login h1 {
+.App-cadastro h1 {
     font-size: 5vh;
 }
 
-.App-login form {
+.App-cadastro form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +42,7 @@
     margin-top: 1rem;
 }
 
-.App-login form input {
+.App-cadastro form input {
     width: 100%;
     padding: 1rem;
     border: 1px solid #3d5a92;
@@ -50,43 +50,42 @@
     font-size: 1rem;
 }
 
-.App-login form input:focus {
+.App-cadastro form input:focus {
     outline: none;
     border-color: #2c4373;
     box-shadow: 0 0 5px #4c6eb8;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.App-login form button {
+.App-cadastro form button {
+    width: 100%;
     padding: 1rem;
     border: none;
     border-radius: 5px;
     background-color: #3d5a92;
     color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
     font-size: 1rem;
-    margin-top: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
     width: 50%;
-}
+}   
 
-.App-login form button:hover {
+.App-cadastro form button:hover {
     background-color: #2c4373;
+    transition: background-color 0.3s;
 }
 
-.App-login p {
+.App-cadastro p {
     text-align: center;
 }
 
-@media screen and (max-width: 1200px) {
-    .App-login {
-        width: 90%;
+@media (max-width: 768px) {
+    .App-cadastro {
+        width: 80%;
     }
-}
 
-@media screen and (max-width: 768px) {
-    .App-login h1 {
-        font-size: 4vh;
+    .App-cadastro h1 {
+        font-size: 2em;
     }
 }
