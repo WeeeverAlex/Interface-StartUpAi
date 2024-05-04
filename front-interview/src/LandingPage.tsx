@@ -69,9 +69,7 @@ function LandingPage() {
           Faça seu cadastro e comece a praticar agora mesmo!
         </h2>
 
-        <button>
-          Cadastre-se
-        </button>
+        <Link to="/signup" id='signup-button'>Cadastre-se</Link>
       </div>
     </div>
   );
