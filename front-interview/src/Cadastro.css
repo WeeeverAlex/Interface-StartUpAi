@@ -1,91 +1,90 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .cadastro {
-    background-color: #f8f8f8;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #f8f8f8;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-cadastro {
-    width: fit-content;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
-    padding: 2%;
-    border-radius: 10px;
-    background-color: #fff;
-    margin: 10% auto;
-    margin-top: 10%;
-    padding: 5rem;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  width: fit-content;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.377);
+  padding: 2%;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 10% auto;
+  margin-top: 10%;
+  padding: 5rem;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .App-cadastro h1 {
-    font-size: 5vh;
+  font-size: 5vh;
 }
 
 .App-cadastro form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .App-cadastro form input {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid #3d5a92;
-    border-radius: 5px;
-    font-size: 1rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #3d5a92;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .App-cadastro form input:focus {
-    outline: none;
-    border-color: #2c4373;
-    box-shadow: 0 0 5px #4c6eb8;
-    transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  border-color: #2c4373;
+  box-shadow: 0 0 5px #4c6eb8;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .App-cadastro form button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #3d5a92;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    width: 50%;
-}   
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #3d5a92;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  width: 50%;
+}
 
 .App-cadastro form button:hover {
-    background-color: #2c4373;
-    transition: background-color 0.3s;
+  background-color: #2c4373;
+  transition: background-color 0.3s;
 }
 
 .App-cadastro p {
-    text-align: center;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
-    .App-cadastro {
-        width: 80%;
-    }
+  .App-cadastro {
+    width: 80%;
+  }
 
-    .App-cadastro h1 {
-        font-size: 2em;
-    }
+  .App-cadastro h1 {
+    font-size: 2em;
+  }
 }
