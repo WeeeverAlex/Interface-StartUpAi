@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home {
+    background-color: #f8f8f8;
+    height: 100vh;
+}
+
+.home .user img {
+    width: 5vh;
+    margin-top: 1vh;
+    position: fixed;  
+    right: 1vh;
+    cursor: pointer;
+    z-index: 1001;  
+}
+
+.pop-up {
+    display: none;  
+    position: fixed;
+    top: 8vh; 
+    right: 1vh;
+    width: 20vw;  
+    min-width: 150px;  
+    background-color: #ffffff;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    z-index: 1000;  
+    color: black;  
+    padding: 10px;  
+}
+
+.pop-up p {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+#exit-button {
+    text-decoration: none;
+    color: #b4162b;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  #exit-button:hover {
+    color: #ff0000;
+    transition: color 0.3s;
+}
+
+.pop-up.active {
+    display: block;  
+}
+
+.prev-conversations {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    width: fit-content;
+    background-color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 2vh;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0 10px 10px 0;
+}
+
+.prev-conversations h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin-bottom: 1vh;
+}
+
+.prev-conversations ul {
+    list-style: none;
+    padding: 0;
+}
+
+.prev-conversations li {
+    font-size: 1.2em;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.conversation h2{
+    color: #3d5a92;
+    font-weight: 500;
+    margin-bottom: 5vh;
+}
+
+.conversation-list li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 2vh;
+    font-size: 1em;
+}
+
+.conversation-list li:hover{
+    background-color: #f8f8f8;
+}
+
+.clear {
+    color: #df5f70;
+}
+
+.clear:hover {
+    color: #ff0000;
+    transition: color 0.5s;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80vh;
+}
+
+.header h1 {
+    font-size: 3em;
+    color: #3d5a92;
+    margin-bottom: 1vh;
+}
+
+.header p {
+    font-size: 1.5em;
+    margin-bottom: 4vh;
+}
+
+.header button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #3d5a92;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header button:hover {
+    background-color: #2c4372;
+    transition: background-color 0.3s;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content {
+    width: 50%;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    font-size: 2em;
+    color: #3d5a92;
+}
+
+.modal-content label {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #464646;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #3d5a92;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #2c4372;
+    transition: background-color 0.3s;
+}
+
+#cancel-creation {
+    margin-left: 2vh;
+    background-color: #bd4454;
+}
+
+#cancel-creation:hover {
+    background-color: #ff0000;
+    transition: background-color 0.3s;
+}
+
+.session-name {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    margin-top: 1vh;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 2vh;
+}
+
+.session-name:focus {
+    outline: none;
+    transition: border 0.3s;
+    border: 1px solid #3d5a92;
+    box-shadow: 0 2px 2px #3d5a92;
+}
+
+.session-name::placeholder {
+    color: #ccc;
+}
+
+.curriculo {
+    margin-bottom: 2vh;
+    color: #464646;
+    margin-top: 1vh;
+}
+
+.description {
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    color: #464646;
+    width: 90%;
+    height: 9vh;
+    padding: 10px;
+    font-size: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.description:focus {
+    outline: none;
+    transition: border 0.3s;
+    border: 1px solid #3d5a92;
+    box-shadow: 0 2px 2px #3d5a92;
+}
+
+.modal-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.modal-title .clear {
+    cursor: pointer;
+}
+
