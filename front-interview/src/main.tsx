@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Entrevista from "./Entrevista";
 import LandingPage from "./LandingPage";
 import LoginPage from "./Login";
 import Cadastro from "./Cadastro";
 import Home from "./Home";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -16,6 +18,7 @@ root.render(
         <Route path="/signup" element={<Cadastro />} />
         <Route path="*" element={<h1 style={{ textAlign: "center", marginTop: "20%", fontSize: "5rem"}}>404 - Page Not Found</h1>} />
         <Route path="/home" element={<Home />}/>
+        <Route path="/entrevista" element={<Entrevista />} />
       </Routes>
     </Router>
   </React.StrictMode>

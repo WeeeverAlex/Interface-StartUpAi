@@ -1,0 +1,126 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    color: #ffffff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    padding: 0.6% 1%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 10px 10px;
+    z-index: 1000;
+  }
+  
+  .navbar-logo {
+    width: 10vw;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    margin-top: 0.5%;
+  }
+  
+  .nav-links li {
+    padding: 20px;
+    font-size: 1em;
+  }
+  
+  .nav-links a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #3d5a92;
+  }
+
+
+.interview-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: 120px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.interview-question span {
+    color: #3d5a92;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.interview-question p {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.interview-answer textarea {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.interview-answer button {
+    background-color: #3d5a92;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.interview-answer button:hover {
+    background-color: #357abD;
+}
+
+.feedback-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.feedback-box {
+    width: 45%; 
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 25px auto; 
+    box-shadow: 0 0 10px rgba(51, 255, 0, 0.400);
+    background-color: #ffffff;
+}
+
+.feedback-box-improvement {
+    width: 45%; 
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 25px auto; 
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.400);
+    background-color: #ffffff;
+}
+
+
+.feedback-box h2 {
+    margin-top: 0;
+    color: #3d5a92;
+}
+
+.feedback-box-improvement h2 {
+    margin-top: 0;
+    color: #3d5a92;
+}
