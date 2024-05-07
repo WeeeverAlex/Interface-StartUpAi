@@ -29,7 +29,7 @@ function LandingPage() {
       <div className="App-header" id="home">
         <img src={jobPicture} alt="Job Interview" className="job-picture" />
         <h1>
-          Bem-vindo à <strong>Aplauso</strong>
+          Bem-vindo ao <strong>Ponto Chave</strong>
         </h1>
         <p>Prepare-se para sua próxima entrevista de emprego com confiança!</p>
       </div>

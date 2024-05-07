@@ -30,7 +30,7 @@ html {
 }
 
 .navbar-logo {
-  width: 10vw;
+  width: 8vw;
 }
 
 .nav-links {
@@ -67,11 +67,12 @@ html {
   padding: 10px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   margin-top: 13%;
-  font-size: 7vw;
+  font-size: 6vw;
+  z-index: 1;
 }
 
 .App-header p {
-  font-size: 1.5vw;
+  font-size: 1.8vw;
   z-index: 1;
   margin-top: 0%;
 }
@@ -100,7 +101,7 @@ html {
 }
 
 .App-about {
-  margin-top: 20%;
+  margin-top: 22%;
   padding: 20px;
   width: 100%;
   display: flex;
