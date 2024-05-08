@@ -1,6 +1,5 @@
 import { SetStateAction, useState } from 'react';
 import './Entrevista.css';
-import companyLogo from "./assets/logo.png";
 import { Link } from "react-router-dom";
 
 const Entrevista = () => {
@@ -15,26 +14,14 @@ const Entrevista = () => {
 
     const handleSubmit = () => {
         console.log('Submitted answer:', answer); // Set feedback here based on the answer
-        setPositiveFeedback('Feedback positivo para a resposta');
-        setImprovementFeedback('Feedback a melhorar para a resposta');
+        setPositiveFeedback('Pontos fortes da sua resposta');
+        setImprovementFeedback('Pontos fracos na sua resposta');
         setIsSubmitted(true); // muda o estado para true quando o formulário é enviado
     };
 
     return (
-        <><div className="landingPage">
-            <nav className="navbar">
-                <img src={companyLogo} alt="Aplauso Logo" className="navbar-logo" />
-                <ul className="nav-links">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <Link to="/login" id="login-button">
-                            Login
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+        <><div className="interview">
+            <Link to="/home"><button className="back-button">Voltar para a página inicial</button></Link>
         </div><div className="interview-container">
                 <div className="interview-question">
                     <span>Conversa XX</span>
@@ -48,8 +35,8 @@ const Entrevista = () => {
                     <button onClick={handleSubmit}>Enviar</button>
                 </div>
             </div>
-            {isSubmitted && ( // os quadrados de feedback só serão renderizados se isSubmitted for true
-                <div className="feedback-container"> {/* Feedback container */}
+            {isSubmitted && ( 
+                <div className="feedback-container">
                     <div className="feedback-box">
                         {positiveFeedback}
                     </div>

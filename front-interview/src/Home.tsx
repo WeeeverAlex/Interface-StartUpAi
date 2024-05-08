@@ -98,7 +98,9 @@ function Home() {
 
                             <br/><br/>
 
-                            <button type="submit">Criar sessão</button>
+                            <Link to="/entrevista">
+                                <button type="submit">Criar sessão</button>
+                            </Link>
                         </form>
                     </div>
                 </div>
