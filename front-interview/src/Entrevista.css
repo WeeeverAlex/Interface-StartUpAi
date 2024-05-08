@@ -122,6 +122,11 @@
   color: #3d5a92;
 }
 
+.button-disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 1200px) {
   .interview-container {
     width: 90%;
