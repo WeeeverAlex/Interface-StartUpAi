@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import "./Entrevista.css";
-import { Link } from "react-router-dom";
 
 interface Question {
   id: number;
@@ -18,27 +18,38 @@ interface Feedback {
   improvementFeedback: string;
 }
 
-
-
 const Entrevista = () => {
-    
-
-  const questions: Question[] = [
-    { id: 1, question: "Qual sua maior força?" },
-    { id: 2, question: "Como você lida com pressão?" },
-    { id: 3, question: "Qual foi um desafio recente e como você o superou?" },
-    { id: 4, question: "Por que você quer trabalhar conosco?" },
-  ];
-
+  const location = useLocation();
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (location.state && 'questions' in location.state) {
+      let questions = location.state.questions;
+      if (typeof questions === 'string') {
+        questions = JSON.parse(questions);
+      }
+      const questionArray = Object.entries(questions).map(([key, value], index) => ({
+        id: index + 1,
+        question: value,
+      }));
+      setQuestions(questionArray);
+    }
+  }, [location.state]);
+
+
+  useEffect(() => {
+    // Resetar o índice da pergunta quando as perguntas são atualizadas
+    setCurrentQuestionIndex(0);
+  }, [questions]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAnswers({
       ...answers,
-      [questions[currentQuestionIndex].id]: event.target.value,
+      [questions[currentQuestionIndex]?.id]: event.target.value,
     });
   };
 
@@ -52,11 +63,11 @@ const Entrevista = () => {
   };
 
   const generateFeedback = () => {
-    const newFeedbacks: Feedback[] = questions.map((question) => ({
+    const newFeedbacks = questions.map((question) => ({
       question: question.question,
       answer: answers[question.id],
-      positiveFeedback: `Pontos fortes da sua resposta a essa pergunta`,
-      improvementFeedback: `Pontos a melhorar na sua resposta a essa pergunta`,
+      positiveFeedback: `Pontos fortes da sua resposta a "${question.question}"`,
+      improvementFeedback: `Pontos a melhorar na sua resposta a "${question.question}"`,
     }));
     setFeedbacks(newFeedbacks);
   };
@@ -69,45 +80,41 @@ const Entrevista = () => {
         </Link>
       </div>
       {!isCompleted ? (
-        <div className="interview-container">
-          <div className="interview-question">
-            <span>Pergunta {questions[currentQuestionIndex].id}</span>
-            <p>{questions[currentQuestionIndex].question}</p>
+        questions.length > 0 && (  // Adicionado verificação para garantir que as questões estão carregadas
+          <div className="interview-container">
+            <div className="interview-question">
+              <span>Pergunta {questions[currentQuestionIndex].id}</span>
+              <p>{questions[currentQuestionIndex].question}</p>
+            </div>
+            <div className="interview-answer">
+              <textarea
+                value={answers[questions[currentQuestionIndex].id] || ""}
+                onChange={handleInputChange}
+                placeholder="Escreva sua resposta aqui..."
+              />
+              <button
+                onClick={handleSubmit}
+                disabled={!answers[questions[currentQuestionIndex]?.id]}
+                className={!answers[questions[currentQuestionIndex]?.id] ? "button-disabled" : ""}
+              >
+                {currentQuestionIndex === questions.length - 1 ? "Finalizar entrevista" : "Próxima"}
+              </button>
+            </div>
           </div>
-          <div className="interview-answer">
-            <textarea
-              value={answers[questions[currentQuestionIndex].id] || ""}
-              onChange={handleInputChange}
-              placeholder="Escreva sua resposta aqui..."
-            />
-            <button
-              onClick={handleSubmit}
-              disabled={!answers[questions[currentQuestionIndex].id]}
-              className={
-                !answers[questions[currentQuestionIndex].id]
-                  ? "button-disabled"
-                  : ""
-              }
-            >
-              {currentQuestionIndex === questions.length - 1
-                ? "Finalizar entrevista"
-                : "Próxima"}
-            </button>
-          </div>
-        </div>
+        )
       ) : (
         <div className="feedback-summary">
-            {feedbacks.map((feedback) => (
-                <div key={feedback.question} className="feedback-container">
-                    <h3>{feedback.question}</h3>
-                    <div className="feedback-positive">
-                        <p>{feedback.positiveFeedback}</p>
-                    </div>
-                <div className="feedback-improvement">
-                    <p>{feedback.improvementFeedback}</p>
-                </div>
+          {feedbacks.map((feedback, index) => (
+            <div key={index} className="feedback-container">
+              <h3>{feedback.question}</h3>
+              <div className="feedback-positive">
+                <p>{feedback.positiveFeedback}</p>
+              </div>
+              <div className="feedback-improvement">
+                <p>{feedback.improvementFeedback}</p>
+              </div>
             </div>
-        ))}
+          ))}
         </div>
       )}
     </>

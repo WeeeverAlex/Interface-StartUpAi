@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import userLogo from "./assets/user.png";
 import "./Home.css";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -13,6 +14,7 @@ function Home() {
     { id: 3, name: "Sessão 3" },
   ]);
   const [uploadedFile, setUploadedFile] = useState<Blob | null>(null);
+  const navigate = useNavigate();  // Hook para usar o redirecionamento
 
   const sessionNameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -36,7 +38,7 @@ function Home() {
     formData.append("vaga", sessionNameRef.current.value);
     formData.append("descricao", descriptionRef.current.value);
     if (uploadedFile) {
-      formData.append("file", uploadedFile); 
+      formData.append("file", uploadedFile);
     }
 
     fetch("http://127.0.0.1:8000/entrevistas/perguntas", {
@@ -44,14 +46,15 @@ function Home() {
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
-
-    setShowModal(false);
-    setUploadedFile(null);
-    event.currentTarget.reset();
-  };
-
+      .then((data) => {
+        console.log(data);
+        // armazenar a resposta em variaveis
+        navigate("/entrevista", { state: { questions: data } });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
   return (
     <div className="home">
       <div className="user" onClick={() => setShowPopUp(!showPopUp)}>
@@ -120,9 +123,7 @@ function Home() {
               ></textarea>
               <br />
               <br />
-              <Link to="/entrevista" id="entrevista-button">
-                  Criar sessão
-              </Link>
+              <button type="submit" className="session-button">Criar sessão</button>
             </form>
           </div>
         </div>
