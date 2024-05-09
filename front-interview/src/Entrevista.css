@@ -87,24 +87,26 @@
 }
 
 .feedback-summary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.feedback-container {
-  width: 45%; /* Ajuste conforme necessário */
-  padding: 20px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin: 20px auto; /* Adicionado para garantir espaço entre os boxes quando eles se ajustam */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-}
-
-.feedback-container h3 {
-  margin-bottom: 10px;
-}
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 100px; /* Adicionado para garantir espaço abaixo do botão de voltar */
+  }
+  
+  .feedback-container {
+    width: 45%; /* Ajuste conforme necessário */
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 20px auto; /* Ajustado para uma margem menor entre as caixas */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  
+  .feedback-container h3 {
+    margin-bottom: 10px;
+    color: #3d5a92;
+  }
 
 .feedback-container p {
   margin: 10px;

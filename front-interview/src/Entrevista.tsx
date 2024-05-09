@@ -37,6 +37,7 @@ const Entrevista = () => {
     { id: 1, question: "Qual sua maior força?" },
     { id: 2, question: "Como você lida com pressão?" },
     { id: 3, question: "Qual foi um desafio recente e como você o superou?" },
+    { id: 4, question: "Por que você quer trabalhar conosco?" },
   ];
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -80,7 +81,7 @@ const Entrevista = () => {
       {!isCompleted ? (
         <div className="interview-container">
           <div className="interview-question">
-            <span>Conversa {questions[currentQuestionIndex].id}</span>
+            <span>Pergunta {questions[currentQuestionIndex].id}</span>
             <p>{questions[currentQuestionIndex].question}</p>
           </div>
           <div className="interview-answer">
