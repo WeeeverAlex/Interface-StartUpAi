@@ -127,6 +127,19 @@
   background-color: #f8d7da; /* Vermelho claro para feedback de melhoria */
 }
 
+.microfone-button {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.microfone-button img {
+  width: 100px;
+}
+
+
 @media screen and (max-width: 1200px) {
   .interview-container {
     width: 90%;

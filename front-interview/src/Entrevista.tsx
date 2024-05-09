@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback  } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./Entrevista.css";
+import microphoneIcon from './assets/microfone.png';
+import recordingIcon from './assets/recording.png';
 
 interface Question {
   id: number;
@@ -72,6 +74,16 @@ const Entrevista = () => {
     setFeedbacks(newFeedbacks);
   };
 
+  const [isRecording, setIsRecording] = useState(false);
+
+    const startRecording = useCallback(() => {
+    setIsRecording(true);
+    }, []);
+
+    const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    }, []);
+
   return (
     <>
       <div className="interview">
@@ -92,6 +104,10 @@ const Entrevista = () => {
                 onChange={handleInputChange}
                 placeholder="Escreva sua resposta aqui..."
               />
+            <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
+                <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
+                    {isRecording}
+            </button>
               <button
                 onClick={handleSubmit}
                 disabled={!answers[questions[currentQuestionIndex]?.id]}
