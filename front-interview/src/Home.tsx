@@ -14,7 +14,8 @@ function Home() {
     { id: 3, name: "Sessão 3" },
   ]);
   const [uploadedFile, setUploadedFile] = useState<Blob | null>(null);
-  const navigate = useNavigate();  // Hook para usar o redirecionamento
+  const [loading, setLoading] = useState(false);  // Estado para controlar o loading
+  const navigate = useNavigate();
 
   const sessionNameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -28,6 +29,7 @@ function Home() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);  // Ativar o estado de carregamento
 
     if (!sessionNameRef.current || !descriptionRef.current) {
       console.error("Form refs are not available");
@@ -48,13 +50,16 @@ function Home() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // armazenar a resposta em variaveis
         navigate("/entrevista", { state: { questions: data } });
       })
       .catch((error) => {
         console.error("Error:", error);
+      })
+      .finally(() => {
+        setLoading(false);  // Desativar o estado de carregamento após a conclusão ou falha da requisição
       });
-  }
+  };
+
   return (
     <div className="home">
       <div className="user" onClick={() => setShowPopUp(!showPopUp)}>
@@ -126,6 +131,12 @@ function Home() {
               <button type="submit" className="session-button">Criar sessão</button>
             </form>
           </div>
+        </div>
+      )}
+
+      {loading && (
+        <div className="loading-overlay">
+          <p>Carregando perguntas...</p>
         </div>
       )}
     </div>

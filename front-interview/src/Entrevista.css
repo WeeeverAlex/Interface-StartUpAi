@@ -139,6 +139,22 @@
   width: 100px;
 }
 
+.microfone-button, .next-button {
+  background-color: #3d5a92;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.next-button:disabled, .button-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 @media screen and (max-width: 1200px) {
   .interview-container {

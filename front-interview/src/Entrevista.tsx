@@ -111,7 +111,7 @@ const Entrevista = () => {
               <button
                 onClick={handleSubmit}
                 disabled={!answers[questions[currentQuestionIndex]?.id]}
-                className={!answers[questions[currentQuestionIndex]?.id] ? "button-disabled" : ""}
+                className={!answers[questions[currentQuestionIndex]?.id] ? "button-disabled" : "next-button"}
               >
                 {currentQuestionIndex === questions.length - 1 ? "Finalizar entrevista" : "Próxima"}
               </button>

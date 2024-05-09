@@ -291,3 +291,35 @@
     text-align: center;
     text-decoration: none;
   }
+
+.loading-overlay {
+  position: fixed;  /* Posiciona sobre todos os outros elementos */
+  top: 0;
+  left: 0;
+  width: 100%;  /* Cobrir toda a largura da tela */
+  height: 100%;  /* Cobrir toda a altura da tela */
+  background: rgba(0, 0, 0, 0.8);  /* Fundo preto semi-transparente */
+  display: flex;
+  justify-content: center;  /* Centraliza horizontalmente o conteúdo */
+  align-items: center;  /* Centraliza verticalmente o conteúdo */
+  z-index: 9999;  /* Garante que o overlay fique acima de todos outros conteúdos */
+  color: white;  /* Texto branco para contraste */
+  font-size: 3em;  /* Tamanho do texto */
+}
+
+.loading-overlay p {
+  animation: pulse 1.5s infinite;  /* Animação para o texto pulsar */
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+  
