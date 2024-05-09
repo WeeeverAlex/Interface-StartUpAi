@@ -22,16 +22,6 @@ interface Feedback {
 
 const Entrevista = () => {
     
-    
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/pergunta")
-        .then((response) => response.json())
-        .then((data) => setData(data));
-    }, []);
-    
-    console.log(data);
 
   const questions: Question[] = [
     { id: 1, question: "Qual sua maior força?" },
@@ -65,8 +55,8 @@ const Entrevista = () => {
     const newFeedbacks: Feedback[] = questions.map((question) => ({
       question: question.question,
       answer: answers[question.id],
-      positiveFeedback: `Pontos fortes da sua resposta a "${question.question}"`,
-      improvementFeedback: `Pontos a melhorar na sua resposta a "${question.question}"`,
+      positiveFeedback: `Pontos fortes da sua resposta a essa pergunta`,
+      improvementFeedback: `Pontos a melhorar na sua resposta a essa pergunta`,
     }));
     setFeedbacks(newFeedbacks);
   };

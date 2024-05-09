@@ -116,6 +116,7 @@ function Home() {
                 required
                 className="description"
                 ref={descriptionRef}
+                placeholder="Escreva a descrição da vaga aqui..."
               ></textarea>
               <br />
               <br />

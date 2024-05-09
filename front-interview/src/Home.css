@@ -245,15 +245,16 @@
 
 .description {
     margin-top: 1vh;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
     color: #464646;
-    width: 90%;
-    height: 9vh;
+    width: 100%;
+    height: 15vh;
     padding: 10px;
     font-size: 0.8em;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-family: 'Poppins', sans-serif;
+    resize: none;
 }
 
 .description:focus {
@@ -282,12 +283,11 @@
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     width: 200px;
     font-weight: bold;
     font-family: "Poppins", sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
     text-decoration: none;
   }
