@@ -119,8 +119,9 @@ function Home() {
               ></textarea>
               <br />
               <br />
-
-              <button type="submit">Criar sessão</button>
+              <Link to="/entrevista" id="entrevista-button">
+                  Criar sessão
+              </Link>
             </form>
           </div>
         </div>
