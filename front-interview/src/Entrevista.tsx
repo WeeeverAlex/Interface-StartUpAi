@@ -106,13 +106,17 @@ const Entrevista = () => {
         </div>
       ) : (
         <div className="feedback-summary">
-          {feedbacks.map((feedback) => (
-            <div key={feedback.question} className="feedback-container">
-              <h3>{feedback.question}</h3>
-              <p>{feedback.positiveFeedback}</p>
-              <p>{feedback.improvementFeedback}</p>
+            {feedbacks.map((feedback) => (
+                <div key={feedback.question} className="feedback-container">
+                    <h3>{feedback.question}</h3>
+                    <div className="feedback-positive">
+                        <p>{feedback.positiveFeedback}</p>
+                    </div>
+                <div className="feedback-improvement">
+                    <p>{feedback.improvementFeedback}</p>
+                </div>
             </div>
-          ))}
+        ))}
         </div>
       )}
     </>
