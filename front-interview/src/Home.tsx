@@ -47,14 +47,6 @@ function Home() {
       .then((data) => console.log(data))
       .catch((error) => console.error("Error:", error));
 
-    fetch("http://127.0.0.1:8000/entrevistas/perguntas", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
-
     setShowModal(false);
     setUploadedFile(null);
     event.currentTarget.reset();
