@@ -38,7 +38,7 @@ function Home() {
 
     const formData = new FormData();
     formData.append("vaga", sessionNameRef.current.value);
-    formData.append("descricao", descriptionRef.current.value);
+    formData.append("link_descricao", descriptionRef.current.value);
     if (uploadedFile) {
       formData.append("file", uploadedFile);
     }
