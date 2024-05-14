@@ -90,16 +90,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 100px; /* Adicionado para garantir espaço abaixo do botão de voltar */
+    margin-top: 5%;
   }
   
   .feedback-container {
-    width: 45%; /* Ajuste conforme necessário */
+    width: 45%; 
     padding: 20px;
     box-sizing: border-box;
     border-radius: 5px;
-    margin: 20px auto; /* Ajustado para uma margem menor entre as caixas */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: #ffffff;
   }
   
@@ -156,9 +156,20 @@
     cursor: not-allowed;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
   .interview-container {
     width: 90%;
     margin: 50px auto;
+  }
+
+  .feedback-summary {
+    margin-top: 5%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .feedback-container {
+    width: 90%;
   }
 }
