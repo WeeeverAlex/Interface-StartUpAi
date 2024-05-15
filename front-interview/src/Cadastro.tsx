@@ -1,19 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Cadastro.css";
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirmPassword');
+
+    if (password !== confirmPassword) {
+      setMessage("As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha no cadastro');
+      }
+
+      setMessage("Cadastro realizado com sucesso!");
+      setTimeout(() => navigate("/login"), 2000);  // Redirect after 2 seconds
+    } catch (error) {
+      setMessage("Erro: " + error.message);
+    }
+  };
+
   return (
     <div className="cadastro">
       <div className="App-cadastro" id="cadastro">
         <h1>Cadastrar</h1>
-        <form>
-          <input type="text" placeholder="Nome completo" required />
-          <input type="email" placeholder="E-mail" required />
-          <input type="password" placeholder="Senha" required />
-          <input type="password" placeholder="Confirme sua senha" required />
+        <form onSubmit={handleSubmit}>
+          <input name="name" type="text" placeholder="Nome completo" required />
+          <input name="email" type="email" placeholder="E-mail" required />
+          <input name="password" type="password" placeholder="Senha" required />
+          <input name="confirmPassword" type="password" placeholder="Confirme sua senha" required />
           <button type="submit">Cadastrar</button>
         </form>
+        {message && <p className="message">{message}</p>}
         <p>
           Já tem uma conta? <Link to="/login">Faça login</Link>
         </p>

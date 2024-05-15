@@ -1,14 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    navigate("/home");
+    const formData = new FormData(event.target);
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/user/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `username=${email}&password=${password}`
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha na autenticação');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.access_token);
+      setMessage("Login bem-sucedido!");
+      setTimeout(() => navigate("/home"), 2000);  // Redirect after 2 seconds
+    } catch (error) {
+      setMessage("Erro: " + error.message);
+    }
   };
 
   return (
@@ -16,10 +39,11 @@ function LoginPage() {
       <div className="App-login" id="login">
         <h1>Fazer login</h1>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="E-mail" required />
-          <input type="password" placeholder="Senha" required />
+          <input name="email" type="email" placeholder="E-mail" required />
+          <input name="password" type="password" placeholder="Senha" required />
           <button type="submit">Entrar</button>
         </form>
+        {message && <p className="message">{message}</p>}
         <p>
           Não tem uma conta? <Link to="/signup">Cadastre-se</Link>
         </p>
