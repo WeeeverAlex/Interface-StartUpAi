@@ -6,7 +6,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const email = formData.get('email');
@@ -22,13 +22,25 @@ function LoginPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Falha na autenticação');
+        throw new Error('Credenciais inválidas!');
       }
 
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
       setMessage("Login bem-sucedido!");
-      setTimeout(() => navigate("/home"), 2000);  // Redirect after 2 seconds
+      fetch("http://127.0.0.1:8000/user/me", {
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${data.access_token}`
+        }
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('user_id', JSON.stringify(data.id));
+        localStorage.setItem('name', data.name);
+      })
+
+      setTimeout(() => navigate("/home"), 2000);
     } catch (error) {
       setMessage("Erro: " + error.message);
     }

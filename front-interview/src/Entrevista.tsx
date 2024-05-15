@@ -36,7 +36,7 @@ const Entrevista = () => {
       }
       const questionArray = Object.entries(questions).map(([key, value], index) => ({
         id: index + 1,
-        question: value,
+        question: value as string, 
       }));
       setQuestions(questionArray);
     }
@@ -92,7 +92,7 @@ const Entrevista = () => {
         </Link>
       </div>
       {!isCompleted ? (
-        questions.length > 0 && (  // Adicionado verificação para garantir que as questões estão carregadas
+        questions.length > 0 && ( 
           <div className="interview-container">
             <div className="interview-question">
               <span>Pergunta {questions[currentQuestionIndex].id}</span>

@@ -78,6 +78,13 @@
   text-align: center;
 }
 
+.message {
+  color: #e7273d;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+}
+
 @media screen and (max-width: 1200px) {
   .App-login {
     width: 90%;

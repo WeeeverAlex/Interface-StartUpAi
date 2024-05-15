@@ -36,29 +36,35 @@ function Home() {
       return;
     }
 
+    const userName = localStorage.getItem('name') || "";
+
     const formData = new FormData();
     formData.append("vaga", sessionNameRef.current.value);
     formData.append("link_descricao", descriptionRef.current.value);
+    formData.append("user_id", localStorage.getItem('user_id') || "");
     if (uploadedFile) {
       formData.append("file", uploadedFile);
     }
 
     fetch("http://127.0.0.1:8000/entrevistas/perguntas", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        navigate("/entrevista", { state: { questions: data } });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      })
-      .finally(() => {
-        setLoading(false);  // Desativar o estado de carregamento após a conclusão ou falha da requisição
-      });
-  };
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`  // Inserir o token no cabeçalho de autorização
+    },
+    body: formData
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    navigate("/entrevista", { state: { questions: data } });
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  })
+  .finally(() => {
+    setLoading(false); 
+  });
+}
 
   return (
     <div className="home">
@@ -66,7 +72,7 @@ function Home() {
         <img src={userLogo} alt="User" />
       </div>
       <div className={`pop-up ${showPopUp ? "active" : ""}`}>
-        <p>%nome da pessoa%</p>
+        <p>{localStorage.getItem('name')}</p>
         <Link to="/" id="exit-button">
           Sair
         </Link>
@@ -74,7 +80,7 @@ function Home() {
 
       <div className="header">
         <div className="introduction">
-          <h1>Olá, %nome da pessoa%!</h1>
+          <h1>Olá, <span>{localStorage.getItem('name')}</span></h1>
           <p>Para iniciar uma nova sessão, clique no botão abaixo.</p>
         </div>
 

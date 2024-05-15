@@ -1,10 +1,21 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./Cadastro.css";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Cadastro.css';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function Cadastro() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState('success'); // 'error' ou 'success'
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,6 +27,8 @@ function Cadastro() {
 
     if (password !== confirmPassword) {
       setMessage("As senhas não coincidem.");
+      setAlertSeverity('error');
+      setOpen(true);
       return;
     }
 
@@ -33,9 +46,13 @@ function Cadastro() {
       }
 
       setMessage("Cadastro realizado com sucesso!");
+      setAlertSeverity('success');
+      setOpen(true);
       setTimeout(() => navigate("/login"), 2000);  // Redirect after 2 seconds
     } catch (error) {
       setMessage("Erro: " + error.message);
+      setAlertSeverity('error');
+      setOpen(true);
     }
   };
 
@@ -50,7 +67,11 @@ function Cadastro() {
           <input name="confirmPassword" type="password" placeholder="Confirme sua senha" required />
           <button type="submit">Cadastrar</button>
         </form>
-        {message && <p className="message">{message}</p>}
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
+            {message}
+          </Alert>
+        </Snackbar>
         <p>
           Já tem uma conta? <Link to="/login">Faça login</Link>
         </p>
