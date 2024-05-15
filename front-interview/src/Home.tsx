@@ -56,7 +56,12 @@ function Home() {
   .then((response) => response.json())
   .then((data) => {
     console.log(data);
-    navigate("/entrevista", { state: { questions: data } });
+    // id da entrevista é o indice 1 do json retornado
+    localStorage.setItem('entrevista_id', data[1]);
+    console.log(localStorage.getItem('entrevista_id'));
+    // navigate("/entrevista", { state: { questions: data } });
+    // esperar um tempo para navegar
+    setTimeout(() => navigate("/entrevista", { state: { questions: data[0] } }), 2000);
   })
   .catch((error) => {
     console.error("Error:", error);

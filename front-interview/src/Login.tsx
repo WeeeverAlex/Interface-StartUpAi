@@ -37,10 +37,9 @@ function LoginPage() {
   
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
-      // Mensagem de sucesso aqui
       setMessage("Login bem-sucedido!");
-      setAlertSeverity('success');  // Definir a severidade para sucesso
-      setOpen(true);  // Abrir o Snackbar
+      setAlertSeverity('success');  
+      setOpen(true);  
   
       fetch("http://127.0.0.1:8000/user/me", {
         method: "GET",
@@ -54,11 +53,11 @@ function LoginPage() {
         localStorage.setItem('name', data.name);
       })
   
-      setTimeout(() => navigate("/home"), 2000);  // Reduzir o tempo de espera para navegação
+      setTimeout(() => navigate("/home"), 2000);  
     } catch (error) {
       setMessage("Erro: " + error.message);
-      setAlertSeverity('error');  // Definir a severidade para erro
-      setOpen(true);  // Abrir o Snackbar
+      setAlertSeverity('error'); 
+      setOpen(true);  
     }
   };
 

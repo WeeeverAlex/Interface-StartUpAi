@@ -50,10 +50,10 @@ const Entrevista = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAnswers({
-      ...answers,
-      [questions[currentQuestionIndex]?.id]: event.target.value,
+        ...answers,
+        ["resposta" + questions[currentQuestionIndex].id]: event.target.value,
     });
-  };
+};
 
   const handleSubmit = () => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -66,13 +66,32 @@ const Entrevista = () => {
 
   const generateFeedback = () => {
     const newFeedbacks = questions.map((question) => ({
-      question: question.question,
-      answer: answers[question.id],
-      positiveFeedback: `Pontos fortes da sua resposta a "${question.question}"`,
-      improvementFeedback: `Pontos a melhorar na sua resposta a "${question.question}"`,
+        question: question.question,
+        answer: answers["resposta" + question.id],
+        positiveFeedback: `Pontos fortes da sua resposta a "${question.question}"`,
+        improvementFeedback: `Pontos a melhorar na sua resposta a "${question.question}"`,
     }));
     setFeedbacks(newFeedbacks);
-  };
+
+    const entrevistaId = localStorage.getItem('entrevista_id') || "";
+
+    // Criar um objeto FormData
+    const formData = new FormData();
+    formData.append('entrevista_id', entrevistaId);
+    formData.append('link_audio', JSON.stringify(answers));
+
+    fetch("http://127.0.0.1:8000/entrevistas/respostas", {
+        method: "POST",
+        body: formData
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+};
 
   const [isRecording, setIsRecording] = useState(false);
 
@@ -100,7 +119,7 @@ const Entrevista = () => {
             </div>
             <div className="interview-answer">
               <textarea
-                value={answers[questions[currentQuestionIndex].id] || ""}
+                value={answers["resposta" + questions[currentQuestionIndex].id] || ""}
                 onChange={handleInputChange}
                 placeholder="Escreva sua resposta aqui..."
               />
@@ -108,13 +127,13 @@ const Entrevista = () => {
                 <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
                     {isRecording}
             </button>
-              <button
+            <button
                 onClick={handleSubmit}
-                disabled={!answers[questions[currentQuestionIndex]?.id]}
-                className={!answers[questions[currentQuestionIndex]?.id] ? "button-disabled" : "next-button"}
-              >
+                disabled={!answers["resposta" + questions[currentQuestionIndex].id]}
+                className={!answers["resposta" + questions[currentQuestionIndex].id] ? "button-disabled" : "next-button"}
+            >
                 {currentQuestionIndex === questions.length - 1 ? "Finalizar entrevista" : "Próxima"}
-              </button>
+            </button>
             </div>
           </div>
         )
@@ -123,9 +142,17 @@ const Entrevista = () => {
           {feedbacks.map((feedback, index) => (
             <div key={index} className="feedback-container">
               <h3>{feedback.question}</h3>
+              <strong>Resposta:</strong> {feedback.answer}
               <div className="feedback-positive">
                 <p>{feedback.positiveFeedback}</p>
               </div>
+
+              
+              <p>
+                <strong>Feedback:</strong>
+                <br />
+                
+              </p>
               <div className="feedback-improvement">
                 <p>{feedback.improvementFeedback}</p>
               </div>
