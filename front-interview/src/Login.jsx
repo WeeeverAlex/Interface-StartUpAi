@@ -10,7 +10,7 @@ function LoginPage() {
   const [open, setOpen] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState('success'); // 'error' ou 'success'
 
-  const handleClose = (event, reason) => {
+  const handleClose = (reason) => {
     if (reason === 'clickaway') {
       return;
     }

@@ -13,21 +13,21 @@ function Home() {
     { id: 2, name: "Sessão 2" },
     { id: 3, name: "Sessão 3" },
   ]);
-  const [uploadedFile, setUploadedFile] = useState<Blob | null>(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [loading, setLoading] = useState(false);  // Estado para controlar o loading
   const navigate = useNavigate();
 
-  const sessionNameRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const sessionNameRef = useRef(null);
+  const descriptionRef = useRef(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
       setUploadedFile(file);
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);  // Ativar o estado de carregamento
 

@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Entrevista from "./Entrevista";
+import Entrevista from './Entrevista'
+import LoginPage from './Login'
+import Cadastro from './Cadastro'
+import Home from './Home'
 import LandingPage from "./LandingPage";
-import LoginPage from "./Login";
-import Cadastro from "./Cadastro";
-import Home from "./Home";
 
 
-const root = ReactDOM.createRoot(document.getElementById("root")!);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>

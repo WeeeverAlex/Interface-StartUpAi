@@ -4,29 +4,13 @@ import "./Entrevista.css";
 import microphoneIcon from './assets/microfone.png';
 import recordingIcon from './assets/recording.png';
 
-interface Question {
-  id: number;
-  question: string;
-}
-
-interface Answers {
-  [key: number]: string;
-}
-
-interface Feedback {
-  question: string;
-  answer: string;
-  positiveFeedback: string;
-  improvementFeedback: string;
-}
-
 const Entrevista = () => {
   const location = useLocation();
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<Answers>({});
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +22,7 @@ const Entrevista = () => {
       if (questions && typeof questions === 'object') {
         const questionArray = Object.entries(questions).map(([key, value], index) => ({
           id: index + 1,
-          question: value as string,
+          question: value,
         }));
         setQuestions(questionArray);
       } else {
@@ -54,7 +38,7 @@ const Entrevista = () => {
     setCurrentQuestionIndex(0);
   }, [questions]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = (event) => {
     setAnswers({
         ...answers,
         ["resposta" + questions[currentQuestionIndex].id]: event.target.value,
@@ -92,7 +76,7 @@ const Entrevista = () => {
         console.log(typeof data);
         console.log(data.pontos_fortes);
         console.log(data.pontos_fracos);
-        const feedbackFormatado: Feedback[] = questions.map((question, index) => {
+        const feedbackFormatado = questions.map((question, index) => {
           const key = `resposta${index + 1}`;
           const positiveFeedback = data.pontos_fortes[key] || "Nenhum feedback positivo fornecido.";
           const improvementFeedback = data.pontos_fracos[key] || "Nenhum ponto de melhoria identificado.";

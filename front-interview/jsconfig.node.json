@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "checkJs": true,
+    "skipLibCheck": true
+  },
+  "include": ["vite.config.js"]
+}
