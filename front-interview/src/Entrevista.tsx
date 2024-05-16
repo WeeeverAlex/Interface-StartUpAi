@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback  } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Entrevista.css";
 import microphoneIcon from './assets/microfone.png';
 import recordingIcon from './assets/recording.png';
@@ -27,6 +27,7 @@ const Entrevista = () => {
   const [answers, setAnswers] = useState<Answers>({});
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state && 'questions' in location.state) {
@@ -34,17 +35,22 @@ const Entrevista = () => {
       if (typeof questions === 'string') {
         questions = JSON.parse(questions);
       }
-      const questionArray = Object.entries(questions).map(([key, value], index) => ({
-        id: index + 1,
-        question: value as string, 
-      }));
-      setQuestions(questionArray);
+      if (questions && typeof questions === 'object') {
+        const questionArray = Object.entries(questions).map(([key, value], index) => ({
+          id: index + 1,
+          question: value as string,
+        }));
+        setQuestions(questionArray);
+      } else {
+        navigate("/home");
+      }
+    } else {
+      console.error('Location state is invalid or missing');
     }
   }, [location.state]);
 
 
   useEffect(() => {
-    // Resetar o índice da pergunta quando as perguntas são atualizadas
     setCurrentQuestionIndex(0);
   }, [questions]);
 
@@ -64,34 +70,47 @@ const Entrevista = () => {
     }
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  
   const generateFeedback = () => {
-    const newFeedbacks = questions.map((question) => ({
-        question: question.question,
-        answer: answers["resposta" + question.id],
-        positiveFeedback: `Pontos fortes da sua resposta a "${question.question}"`,
-        improvementFeedback: `Pontos a melhorar na sua resposta a "${question.question}"`,
-    }));
-    setFeedbacks(newFeedbacks);
-
+    setIsLoading(true);
     const entrevistaId = localStorage.getItem('entrevista_id') || "";
-
-    // Criar um objeto FormData
+  
     const formData = new FormData();
     formData.append('entrevista_id', entrevistaId);
     formData.append('link_audio', JSON.stringify(answers));
-
+  
     fetch("http://127.0.0.1:8000/entrevistas/respostas", {
         method: "POST",
         body: formData
     })
     .then((response) => response.json())
-    .then((data) => {
+    .then((data) => { 
+        data = JSON.parse(data);
         console.log(data);
+        console.log(typeof data);
+        console.log(data.pontos_fortes);
+        console.log(data.pontos_fracos);
+        const feedbackFormatado: Feedback[] = questions.map((question, index) => {
+          const key = `resposta${index + 1}`;
+          const positiveFeedback = data.pontos_fortes[key] || "Nenhum feedback positivo fornecido.";
+          const improvementFeedback = data.pontos_fracos[key] || "Nenhum ponto de melhoria identificado.";
+          return {
+              question: question.question,
+              answer: answers[key] || "Nenhuma resposta fornecida.",
+              positiveFeedback,
+              improvementFeedback,
+          };
+        });
+  
+        setIsLoading(false);
+        setFeedbacks(feedbackFormatado);
     })
     .catch((error) => {
         console.error("Error:", error);
     });
-};
+  };
 
   const [isRecording, setIsRecording] = useState(false);
 
@@ -138,28 +157,44 @@ const Entrevista = () => {
           </div>
         )
       ) : (
+        isLoading && (
+          <div className="loading-screen">
+            <p>Carregando feedback...</p>
+          </div>
+        ))
+        }
         <div className="feedback-summary">
           {feedbacks.map((feedback, index) => (
             <div key={index} className="feedback-container">
               <h3>{feedback.question}</h3>
-              <strong>Resposta:</strong> {feedback.answer}
+              <div className="feedback-answer">
+                <strong>Resposta fornecida:</strong> {feedback.answer}
+
+                <br /><br />
+
+              </div>
               <div className="feedback-positive">
+                <strong style={
+                  {color : "#2b5c30", paddingLeft: "10px", fontSize: "1.2em"}
+                }>
+                  Pontos fortes
+                </strong>
                 <p>{feedback.positiveFeedback}</p>
               </div>
 
               
-              <p>
-                <strong>Feedback:</strong>
-                <br />
-                
-              </p>
               <div className="feedback-improvement">
+                <strong style={
+                  {color : "#b22222", paddingLeft: "10px", fontSize: "1.2em"}
+                }>
+                  Pontos fracos
+                </strong>
                 <p>{feedback.improvementFeedback}</p>
               </div>
             </div>
           ))}
         </div>
-      )}
+      
     </>
   );
 };
