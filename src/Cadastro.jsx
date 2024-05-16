@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Cadastro.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import icon from './assets/favicon.ico';
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function Cadastro() {
     }
 
     try {
-      const response = await fetch('http://54.160.94.130:8000/user/signup', {
+      const response = await fetch('http://3.91.215.88:8000/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,6 +56,11 @@ function Cadastro() {
       setOpen(true);
     }
   };
+
+  document.title = "Ponto Chave - Cadastro";
+
+  const favicon = document.querySelector('link[rel="icon"]');
+  favicon.href = icon;
 
   return (
     <div className="cadastro">

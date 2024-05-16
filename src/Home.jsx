@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import userLogo from "./assets/user.png";
 import "./Home.css";
 import ClearIcon from "@mui/icons-material/Clear";
+import icon from "./assets/favicon.ico";
 
 function Home() {
   const [showPopUp, setShowPopUp] = useState(false);
@@ -46,7 +47,7 @@ function Home() {
       formData.append("file", uploadedFile);
     }
 
-    fetch("http://54.160.94.130:8000/entrevistas/perguntas", {
+    fetch("http://3.91.215.88:8000/entrevistas/perguntas", {
     method: "POST",
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`  // Inserir o token no cabeçalho de autorização
@@ -70,6 +71,11 @@ function Home() {
     setLoading(false); 
   });
 }
+
+  document.title = "Ponto Chave - Home";
+
+  const favicon = document.querySelector('link[rel="icon"]');
+  favicon.href = icon;
 
   return (
     <div className="home">

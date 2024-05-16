@@ -5,9 +5,18 @@ import step2 from "./assets/icon2.png";
 import step3 from "./assets/icon3.png";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
+import icon from "./assets/favicon.ico";
+
+document.title = "Ponto Chave";
+
+// mudar o icone do site
+const favicon = document.querySelector('link[rel="icon"]');
+favicon.href = icon;
+
 
 function LandingPage() {
   return (
+
     <div className="landingPage">
       <nav className="navbar">
         <img src={companyLogo} alt="Aplauso Logo" className="navbar-logo" />
