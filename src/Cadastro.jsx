@@ -34,7 +34,7 @@ function Cadastro() {
     }
 
     try {
-      const response = await fetch('http://3.91.215.88:8000/user/signup', {
+      const response = await fetch('https://api.pontochave.projetohorizontes.com/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

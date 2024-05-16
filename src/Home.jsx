@@ -47,7 +47,7 @@ function Home() {
       formData.append("file", uploadedFile);
     }
 
-    fetch("http://3.91.215.88:8000/entrevistas/perguntas", {
+    fetch("https://api.pontochave.projetohorizontes.com/entrevistas/perguntas", {
     method: "POST",
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`  // Inserir o token no cabeçalho de autorização

@@ -66,7 +66,7 @@ const Entrevista = () => {
     formData.append('entrevista_id', entrevistaId);
     formData.append('link_audio', JSON.stringify(answers));
   
-    fetch("http://3.91.215.88:8000/entrevistas/respostas", {
+    fetch("https://api.pontochave.projetohorizontes.com/entrevistas/respostas", {
         method: "POST",
         body: formData
     })
