@@ -46,7 +46,7 @@ function Home() {
       formData.append("file", uploadedFile);
     }
 
-    fetch("http://127.0.0.1:8000/entrevistas/perguntas", {
+    fetch("http://54.160.94.130:8000/entrevistas/perguntas", {
     method: "POST",
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`  // Inserir o token no cabeçalho de autorização
@@ -86,7 +86,7 @@ function Home() {
       <div className="header">
         <div className="introduction">
           <h1>Olá, <span>{localStorage.getItem('name')}</span></h1>
-          <p>Para iniciar uma nova sessão, clique no botão abaixo.</p>
+          <p>Para iniciar uma nova entrevista, clique no botão abaixo.</p>
         </div>
 
         <div className="new-conversation">
@@ -98,20 +98,20 @@ function Home() {
         <div className="modal">
           <div className="modal-content">
             <div className="modal-title">
-              <h2>Criar nova sessão</h2>
+              <h2>Criar nova entrevista</h2>
               <ClearIcon
                 className="clear"
                 onClick={() => setShowModal(false)}
               />
             </div>
             <form onSubmit={handleSubmit}>
-              <label>Nome da sessão:</label>
+              <label>Título da vaga:</label>
               <br />
               <input
                 type="text"
                 required
                 className="session-name"
-                placeholder="Digite o nome da sessão..."
+                placeholder="Digite o título da vaga..."
                 ref={sessionNameRef}
               />
               <br />

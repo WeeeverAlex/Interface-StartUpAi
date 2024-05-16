@@ -23,7 +23,7 @@ function LoginPage() {
     const password = formData.get('password');
   
     try {
-      const response = await fetch('http://127.0.0.1:8000/user/token', {
+      const response = await fetch('http://54.160.94.130:8000/user/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,7 +41,7 @@ function LoginPage() {
       setAlertSeverity('success');  
       setOpen(true);  
   
-      fetch("http://127.0.0.1:8000/user/me", {
+      fetch("http://54.160.94.130:8000/user/me", {
         method: "GET",
         headers: {
           'Authorization': `Bearer ${data.access_token}`

@@ -65,7 +65,7 @@ const Entrevista = () => {
     formData.append('entrevista_id', entrevistaId);
     formData.append('link_audio', JSON.stringify(answers));
   
-    fetch("http://127.0.0.1:8000/entrevistas/respostas", {
+    fetch("http://54.160.94.130:8000/entrevistas/respostas", {
         method: "POST",
         body: formData
     })
@@ -171,7 +171,7 @@ const Entrevista = () => {
                 <strong style={
                   {color : "#b22222", paddingLeft: "10px", fontSize: "1.2em"}
                 }>
-                  Pontos fracos
+                  Pontos a melhorar
                 </strong>
                 <p>{feedback.improvementFeedback}</p>
               </div>
