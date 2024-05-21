@@ -7,7 +7,7 @@
 | [FrontEnd](https://github.com/WeeeverAlex/Interface-StartUpAi) | 
 | [BackEnd](https://github.com/eriksoaress/StartupAI-Interview) | 
 | [Deploy FrontEnd](https://ponto-chave.vercel.app/) |
-| [Deploy BacktEnd](https://api.pontochave.projetohorizontes.com/) |
+| [Deploy BackEnd](https://api.pontochave.projetohorizontes.com/) |
 
 ## Autores
 
