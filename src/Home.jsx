@@ -124,7 +124,11 @@ function Home() {
                 required
                 className="curriculo"
                 onChange={handleFileChange}
-                accept="application/pdf"
+                accept=".pdf,.docx"
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
               />
               <br />
               <br />
