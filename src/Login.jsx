@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import "./Login.css";
+import icon from "./assets/favicon.ico";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function LoginPage() {
     const password = formData.get('password');
   
     try {
-      const response = await fetch('http://54.160.94.130:8000/user/token', {
+      const response = await fetch('https://api.pontochave.projetohorizontes.com/user/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,7 +42,7 @@ function LoginPage() {
       setAlertSeverity('success');  
       setOpen(true);  
   
-      fetch("http://54.160.94.130:8000/user/me", {
+      fetch("https://api.pontochave.projetohorizontes.com/user/me", {
         method: "GET",
         headers: {
           'Authorization': `Bearer ${data.access_token}`
@@ -60,6 +61,11 @@ function LoginPage() {
       setOpen(true);  
     }
   };
+
+  document.title = "Ponto Chave - Fazer Login";
+
+  const favicon = document.querySelector('link[rel="icon"]');
+  favicon.href = icon;
 
   return (
     <div className="login">

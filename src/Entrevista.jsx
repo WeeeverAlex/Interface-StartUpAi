@@ -3,6 +3,7 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Entrevista.css";
 import microphoneIcon from './assets/microfone.png';
 import recordingIcon from './assets/recording.png';
+import icon from "./assets/favicon.ico";
 
 const Entrevista = () => {
   const location = useLocation();
@@ -65,7 +66,7 @@ const Entrevista = () => {
     formData.append('entrevista_id', entrevistaId);
     formData.append('link_audio', JSON.stringify(answers));
   
-    fetch("http://54.160.94.130:8000/entrevistas/respostas", {
+    fetch("https://api.pontochave.projetohorizontes.com/entrevistas/respostas", {
         method: "POST",
         body: formData
     })
@@ -105,6 +106,13 @@ const Entrevista = () => {
     const stopRecording = useCallback(() => {
     setIsRecording(false);
     }, []);
+
+  document.title = "Ponto Chave";
+
+  const favicon = document.querySelector('link[rel="icon"]');
+  favicon.href = icon;
+
+  
 
   return (
     <>
