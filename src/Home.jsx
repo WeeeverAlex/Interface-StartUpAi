@@ -10,6 +10,7 @@ function Home() {
   const [showModal, setShowModal] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [interviewType, setInterviewType] = useState("text"); // Default to text interview
 
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ function Home() {
     }
   };
 
-  const handleSubmit = (event, interviewType) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -102,7 +103,7 @@ function Home() {
                 onClick={() => setShowModal(false)}
               />
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <label>Título da vaga:</label>
               <br />
               <input
@@ -144,8 +145,30 @@ function Home() {
 
               <label>Tipo de Entrevista:</label>
               <br />
-              <button type="submit" className="session-button" onClick={(e) => handleSubmit(e, "text")}>Entrevista por Escrito</button>
-              <button type="submit" className="session-button" onClick={(e) => handleSubmit(e, "audio")}>Entrevista por Áudio</button>
+              <div className="radio-buttons">
+                <input
+                  type="radio"
+                  id="text"
+                  name="interviewType"
+                  value="text"
+                  checked={interviewType === "text"}
+                  onChange={() => setInterviewType("text")}
+                />
+                <label htmlFor="text">Entrevista por Escrito</label>
+                <br />
+                <input
+                  type="radio"
+                  id="audio"
+                  name="interviewType"
+                  value="audio"
+                  checked={interviewType === "audio"}
+                  onChange={() => setInterviewType("audio")}
+                />
+                <label htmlFor="audio">Entrevista por Áudio</label>
+              </div>
+              <br />
+
+              <button type="submit" className="session-button">Criar Entrevista</button>
             </form>
           </div>
         </div>
