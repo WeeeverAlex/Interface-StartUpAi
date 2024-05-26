@@ -5,7 +5,7 @@ import microphoneIcon from './assets/microfone.png';
 import recordingIcon from './assets/recording.png';
 import icon from "./assets/favicon.ico";
 
-const Entrevista = () => {
+const Entrevista_Audio = () => {
   const location = useLocation();
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -97,6 +97,16 @@ const Entrevista = () => {
     });
   };
 
+  const [isRecording, setIsRecording] = useState(false);
+
+    const startRecording = useCallback(() => {
+    setIsRecording(true);
+    }, []);
+
+    const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    }, []);
+
   document.title = "Ponto Chave";
 
   const favicon = document.querySelector('link[rel="icon"]');
@@ -124,6 +134,10 @@ const Entrevista = () => {
                 onChange={handleInputChange}
                 placeholder="Escreva sua resposta aqui..."
               />
+            <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
+                <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
+                    {isRecording}
+            </button>
             <button
                 onClick={handleSubmit}
                 disabled={!answers["resposta" + questions[currentQuestionIndex].id]}
@@ -177,4 +191,4 @@ const Entrevista = () => {
   );
 };
 
-export default Entrevista;
+export default Entrevista_Audio;
