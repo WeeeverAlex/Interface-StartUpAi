@@ -56,6 +56,42 @@
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.App-cadastro form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #303030;
+  width: 100%;
+  text-align: left;
+}
+
+#password-label-and-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  margin-right: auto;
+  gap: 0.5rem;
+}
+
+.password-info {
+  display: none;
+  position: absolute; 
+  left: 105%;
+  top: 0; 
+  white-space: nowrap; 
+  background-color: #f0f0f0;
+  padding: 15px 35px 15px 35px; 
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#password-label-and-info:hover .password-info {
+  display: block; 
+}
+
 .App-cadastro form button {
   width: 100%;
   padding: 1rem;
