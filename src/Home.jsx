@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import userLogo from "./assets/user.png";
 import "./Home.css";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -9,13 +8,10 @@ import icon from "./assets/favicon.ico";
 function Home() {
   const [showPopUp, setShowPopUp] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [conversations, setConversations] = useState([
-    { id: 1, name: "Sessão 1" },
-    { id: 2, name: "Sessão 2" },
-    { id: 3, name: "Sessão 3" },
-  ]);
   const [uploadedFile, setUploadedFile] = useState(null);
-  const [loading, setLoading] = useState(false);  // Estado para controlar o loading
+  const [loading, setLoading] = useState(false);
+  const [interviewType, setInterviewType] = useState("text"); // Default to text interview
+
   const navigate = useNavigate();
 
   const sessionNameRef = useRef(null);
@@ -30,7 +26,7 @@ function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true);  // Ativar o estado de carregamento
+    setLoading(true);
 
     if (!sessionNameRef.current || !descriptionRef.current) {
       console.error("Form refs are not available");
@@ -48,29 +44,26 @@ function Home() {
     }
 
     fetch("https://api.pontochave.projetohorizontes.com/entrevistas/perguntas", {
-    method: "POST",
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`  // Inserir o token no cabeçalho de autorização
-    },
-    body: formData
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    // id da entrevista é o indice 1 do json retornado
-    localStorage.setItem('entrevista_id', data[1]);
-    console.log(localStorage.getItem('entrevista_id'));
-    // navigate("/entrevista", { state: { questions: data } });
-    // esperar um tempo para navegar
-    setTimeout(() => navigate("/entrevista", { state: { questions: data[0] } }), 2000);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  })
-  .finally(() => {
-    setLoading(false); 
-  });
-}
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: formData
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('entrevista_id', data[1]);
+        console.log(localStorage.getItem('entrevista_id'));
+        setTimeout(() => navigate(interviewType === "audio" ? "/entrevista_audio" : "/entrevista", { state: { questions: data[0] } }), 2000);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   document.title = "Ponto Chave - Home";
 
@@ -149,7 +142,33 @@ function Home() {
               ></textarea>
               <br />
               <br />
-              <button type="submit" className="session-button">Criar sessão</button>
+
+              <label>Tipo de Entrevista:</label>
+              <br />
+              <div className="radio-buttons">
+                <input
+                  type="radio"
+                  id="text"
+                  name="interviewType"
+                  value="text"
+                  checked={interviewType === "text"}
+                  onChange={() => setInterviewType("text")}
+                />
+                <label htmlFor="text">Entrevista por Escrito</label>
+                <br />
+                <input
+                  type="radio"
+                  id="audio"
+                  name="interviewType"
+                  value="audio"
+                  checked={interviewType === "audio"}
+                  onChange={() => setInterviewType("audio")}
+                />
+                <label htmlFor="audio">Entrevista por Áudio</label>
+              </div>
+              <br />
+
+              <button type="submit" className="session-button">Criar Entrevista</button>
             </form>
           </div>
         </div>

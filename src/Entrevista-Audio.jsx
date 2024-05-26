@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Entrevista.css";
+import microphoneIcon from './assets/microfone.png';
+import recordingIcon from './assets/recording.png';
 import icon from "./assets/favicon.ico";
 
-const Entrevista = () => {
+const Entrevista_Audio = () => {
   const location = useLocation();
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [feedbacks, setFeedbacks] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -89,6 +92,16 @@ const Entrevista = () => {
       });
   };
 
+  const startRecording = useCallback(() => {
+    setIsRecording(true);
+    // Add recording logic here
+  }, []);
+
+  const stopRecording = useCallback(() => {
+    setIsRecording(false);
+    // Add logic to stop and save recording
+  }, []);
+
   document.title = "Ponto Chave";
 
   const favicon = document.querySelector('link[rel="icon"]');
@@ -109,11 +122,12 @@ const Entrevista = () => {
               <p>{questions[currentQuestionIndex].question}</p>
             </div>
             <div className="interview-answer">
-              <textarea
-                value={answers["resposta" + questions[currentQuestionIndex].id] || ""}
-                onChange={handleInputChange}
-                placeholder="Escreva sua resposta aqui..."
-              />
+              <div className="audio-answer">
+                <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
+                  <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
+                  {isRecording ? "Parar Gravação" : "Iniciar Gravação"}
+                </button>
+              </div>
               <button
                 onClick={handleSubmit}
                 disabled={!answers["resposta" + questions[currentQuestionIndex].id]}
@@ -158,4 +172,4 @@ const Entrevista = () => {
   );
 };
 
-export default Entrevista;
+export default Entrevista_Audio;
