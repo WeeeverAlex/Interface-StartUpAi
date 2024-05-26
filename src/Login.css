@@ -41,6 +41,14 @@
   margin-top: 1rem;
 }
 
+.App-login form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #303030;
+  width: 100%;
+  text-align: left;
+}
+
 .App-login form input {
   width: 100%;
   padding: 1rem;
