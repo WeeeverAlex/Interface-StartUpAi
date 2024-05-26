@@ -193,6 +193,7 @@
 
 .modal-content button {
     padding: 10px 20px;
+    margin: 2vh 0;
     font-size: 1.2em;
     background-color: #923d3d;
     color: #fff;
