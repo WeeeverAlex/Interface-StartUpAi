@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "./Entrevista.css";
 import microphoneIcon from './assets/microfone.png';
 import recordingIcon from './assets/recording.png';
@@ -16,7 +18,7 @@ const Entrevista_Audio = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState("");
   const [message, setMessage] = useState("");
-  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("info");
   const [open, setOpen] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -173,6 +175,10 @@ const Entrevista_Audio = () => {
   const favicon = document.querySelector('link[rel="icon"]');
   favicon.href = icon;
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <div className="interview">
@@ -190,7 +196,7 @@ const Entrevista_Audio = () => {
             <div className="interview-answer">
               <div className="audio-answer">
                 <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
-                  <img src={isRecording ? "" : microphoneIcon} alt="Microfone" />
+                  <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
                   {isRecording ? "Parar Gravação" : ""}
                 </button>
               </div>
@@ -234,6 +240,11 @@ const Entrevista_Audio = () => {
           </div>
         ))}
       </div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
