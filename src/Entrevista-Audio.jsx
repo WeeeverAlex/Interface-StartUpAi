@@ -20,6 +20,7 @@ const Entrevista_Audio = () => {
   const [message, setMessage] = useState("");
   const [alertSeverity, setAlertSeverity] = useState("info");
   const [open, setOpen] = useState(false);
+  const [snackbarDuration, setSnackbarDuration] = useState(6000);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const navigate = useNavigate();
@@ -120,6 +121,7 @@ const Entrevista_Audio = () => {
       setMessage("Gravação iniciada.");
       setAlertSeverity("info");
       setOpen(true);
+      setSnackbarDuration(6000);
 
     } catch (error) {
       console.error('Error accessing media devices.', error);
@@ -168,6 +170,7 @@ const Entrevista_Audio = () => {
     setMessage("Gravação parada.");
     setAlertSeverity("info");
     setOpen(true);
+    setSnackbarDuration(10000); // Exibir por mais tempo (10 segundos)
   };
 
   document.title = "Ponto Chave";
@@ -197,7 +200,7 @@ const Entrevista_Audio = () => {
               <div className="audio-answer">
                 <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
                   <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
-                  {isRecording ? "" : ""}
+                  {isRecording ? "Parar Gravação" : ""}
                 </button>
               </div>
               <button
@@ -240,7 +243,7 @@ const Entrevista_Audio = () => {
           </div>
         ))}
       </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={snackbarDuration} onClose={handleClose}>
         <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
           {message}
         </Alert>
