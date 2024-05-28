@@ -199,7 +199,7 @@ const Entrevista_Audio = () => {
             <div className="interview-answer">
               <div className="audio-answer">
                 <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
-                  {isRecording ? "Enviar Gravação" : microphoneIcon}
+                  {isRecording ? "Enviar Gravação" : <img src={microphoneIcon} alt="microfone" />}
                 </button>
               </div>
             </div>
