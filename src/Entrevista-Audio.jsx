@@ -203,13 +203,6 @@ const Entrevista_Audio = () => {
                   {isRecording ? "" : ""}
                 </button>
               </div>
-              <button
-                onClick={handleSubmit}
-                disabled={!answers["resposta" + questions[currentQuestionIndex].id]}
-                className={!answers["resposta" + questions[currentQuestionIndex].id] ? "button-disabled" : "next-button"}
-              >
-                {currentQuestionIndex === questions.length - 1 ? "Finalizar entrevista" : "Próxima"}
-              </button>
             </div>
           </div>
         )
