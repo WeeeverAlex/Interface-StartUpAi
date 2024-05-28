@@ -15,6 +15,9 @@ const Entrevista_Audio = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState("");
+  const [message, setMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [open, setOpen] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const navigate = useNavigate();
@@ -43,7 +46,6 @@ const Entrevista_Audio = () => {
     setCurrentQuestionIndex(0);
   }, [questions]);
 
-
   const handleSubmit = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -53,7 +55,6 @@ const Entrevista_Audio = () => {
     }
   };
 
-  
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -70,64 +71,67 @@ const Entrevista_Audio = () => {
         const url = URL.createObjectURL(audioBlob);
         setAudioUrl(url);
         audioChunksRef.current = [];
-        
+
         try {
           const formData = new FormData();
           formData.append('file', audioBlob, 'audio.wav');
           const response = await fetch('https://api.pontochave.projetohorizontes.com/entrevistas/audio', {
             method: 'POST',
             body: formData,
-            
           });
-      
+
           if (!response.ok) {
             throw new Error('Failed to upload audio file.');
           }
-          
+
           const data = await response.json();
           const transcription = data || "Transcrição não disponível";
 
-          console.log("Resposta: " + transcription)
-          
-          // Atualiza o estado de forma segura, garantindo que as atualizações assíncronas sejam completadas
           setAnswers(prevAnswers => {
             const newAnswers = {
               ...prevAnswers,
               ["resposta" + (currentQuestionIndex + 1)]: transcription
             };
-            
-            // Verifica se é a última pergunta
+
             if (currentQuestionIndex < questions.length - 1) {
               setCurrentQuestionIndex(currentQuestionIndex + 1);
             } else {
               setIsCompleted(true);
-              // Chama generateFeedback aqui, garantindo que newAnswers é passado diretamente
               generateFeedback(newAnswers);
             }
-            
+
             return newAnswers;
           });
+
+          setMessage("Gravação bem-sucedida!");
+          setAlertSeverity("success");
+          setOpen(true);
+
         } catch (error) {
           console.error('Error uploading audio file:', error);
         }
       };
-      
-      
+
       mediaRecorderRef.current.start();
       setIsRecording(true);
+
+      setMessage("Gravação iniciada.");
+      setAlertSeverity("info");
+      setOpen(true);
+
     } catch (error) {
       console.error('Error accessing media devices.', error);
     }
   };
-  
+
   const generateFeedback = (finalAnswers = answers) => {
     setIsLoading(true);
     const entrevistaId = localStorage.getItem('entrevista_id') || "";
-  
+
     const formData = new FormData();
     formData.append('entrevista_id', entrevistaId);
     formData.append('link_audio', JSON.stringify(finalAnswers));
-  
+
     fetch("https://api.pontochave.projetohorizontes.com/entrevistas/respostas", {
       method: "POST",
       body: formData
@@ -137,9 +141,6 @@ const Entrevista_Audio = () => {
       data = JSON.parse(data);
       const feedbackFormatado = questions.map((question, index) => {
         const key = `resposta${index + 1}`;
-        console.log("Chave que eu estou gerando o feedback: " + key);
-        console.log("Resposta: " + finalAnswers[key]);
-        console.log("Todas as respostas: " + JSON.stringify(finalAnswers, null, 2));
         return {
           question: question.question,
           answer: finalAnswers[key] || "Nenhuma resposta fornecida.",
@@ -147,7 +148,7 @@ const Entrevista_Audio = () => {
           improvementFeedback: data.pontos_fracos[key] || "Nenhum ponto de melhoria identificado."
         };
       });
-  
+
       setIsLoading(false);
       setFeedbacks(feedbackFormatado);
     })
@@ -155,11 +156,16 @@ const Entrevista_Audio = () => {
       console.error("Error:", error);
     });
   };
+
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
     }
     setIsRecording(false);
+
+    setMessage("Gravação parada.");
+    setAlertSeverity("info");
+    setOpen(true);
   };
 
   document.title = "Ponto Chave";
