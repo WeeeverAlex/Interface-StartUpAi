@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Entrevista.css";
 import microphoneIcon from './assets/microfone.png';
@@ -14,7 +14,9 @@ const Entrevista_Audio = () => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [audioUrl, setAudioUrl] = useState("");
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,12 +43,6 @@ const Entrevista_Audio = () => {
     setCurrentQuestionIndex(0);
   }, [questions]);
 
-  const handleInputChange = (event) => {
-    setAnswers({
-      ...answers,
-      ["resposta" + questions[currentQuestionIndex].id]: event.target.value,
-    });
-  };
 
   const handleSubmit = () => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -57,50 +53,114 @@ const Entrevista_Audio = () => {
     }
   };
 
-  const generateFeedback = () => {
+  
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorderRef.current.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
+        audioChunksRef.current = [];
+        
+        try {
+          const formData = new FormData();
+          formData.append('file', audioBlob, 'audio.wav');
+          const response = await fetch('https://api.pontochave.projetohorizontes.com/entrevistas/audio', {
+            method: 'POST',
+            body: formData,
+            
+          });
+      
+          if (!response.ok) {
+            throw new Error('Failed to upload audio file.');
+          }
+          
+          const data = await response.json();
+          const transcription = data || "Transcrição não disponível";
+
+          console.log("Resposta: " + transcription)
+          
+          // Atualiza o estado de forma segura, garantindo que as atualizações assíncronas sejam completadas
+          setAnswers(prevAnswers => {
+            const newAnswers = {
+              ...prevAnswers,
+              ["resposta" + (currentQuestionIndex + 1)]: transcription
+            };
+            
+            // Verifica se é a última pergunta
+            if (currentQuestionIndex < questions.length - 1) {
+              setCurrentQuestionIndex(currentQuestionIndex + 1);
+            } else {
+              setIsCompleted(true);
+              // Chama generateFeedback aqui, garantindo que newAnswers é passado diretamente
+              generateFeedback(newAnswers);
+            }
+            
+            return newAnswers;
+          });
+        } catch (error) {
+          console.error('Error uploading audio file:', error);
+        }
+      };
+      
+      
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (error) {
+      console.error('Error accessing media devices.', error);
+    }
+  };
+  
+  const generateFeedback = (finalAnswers = answers) => {
     setIsLoading(true);
     const entrevistaId = localStorage.getItem('entrevista_id') || "";
-
+  
     const formData = new FormData();
     formData.append('entrevista_id', entrevistaId);
-    formData.append('link_audio', JSON.stringify(answers));
-
+    formData.append('link_audio', JSON.stringify(finalAnswers));
+  
     fetch("https://api.pontochave.projetohorizontes.com/entrevistas/respostas", {
       method: "POST",
       body: formData
     })
-      .then((response) => response.json())
-      .then((data) => {
-        data = JSON.parse(data);
-        const feedbackFormatado = questions.map((question, index) => {
-          const key = `resposta${index + 1}`;
-          const positiveFeedback = data.pontos_fortes[key] || "Nenhum feedback positivo fornecido.";
-          const improvementFeedback = data.pontos_fracos[key] || "Nenhum ponto de melhoria identificado.";
-          return {
-            question: question.question,
-            answer: answers[key] || "Nenhuma resposta fornecida.",
-            positiveFeedback,
-            improvementFeedback,
-          };
-        });
-
-        setIsLoading(false);
-        setFeedbacks(feedbackFormatado);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+    .then(response => response.json())
+    .then(data => {
+      data = JSON.parse(data);
+      const feedbackFormatado = questions.map((question, index) => {
+        const key = `resposta${index + 1}`;
+        console.log("Chave que eu estou gerando o feedback: " + key);
+        console.log("Resposta: " + finalAnswers[key]);
+        console.log("Todas as respostas: " + JSON.stringify(finalAnswers, null, 2));
+        return {
+          question: question.question,
+          answer: finalAnswers[key] || "Nenhuma resposta fornecida.",
+          positiveFeedback: data.pontos_fortes[key] || "Nenhum feedback positivo fornecido.",
+          improvementFeedback: data.pontos_fracos[key] || "Nenhum ponto de melhoria identificado."
+        };
       });
+  
+      setIsLoading(false);
+      setFeedbacks(feedbackFormatado);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
   };
-
-  const startRecording = useCallback(() => {
-    setIsRecording(true);
-    // Add recording logic here
-  }, []);
-
-  const stopRecording = useCallback(() => {
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+    }
     setIsRecording(false);
-    // Add logic to stop and save recording
-  }, []);
+  };
 
   document.title = "Ponto Chave";
 
@@ -124,8 +184,8 @@ const Entrevista_Audio = () => {
             <div className="interview-answer">
               <div className="audio-answer">
                 <button onClick={isRecording ? stopRecording : startRecording} className="microfone-button">
-                  <img src={isRecording ? recordingIcon : microphoneIcon} alt="Microfone" />
-                  {isRecording ? "Parar Gravação" : "Iniciar Gravação"}
+                  <img src={isRecording ? "" : microphoneIcon} alt="Microfone" />
+                  {isRecording ? "Parar Gravação" : ""}
                 </button>
               </div>
               <button

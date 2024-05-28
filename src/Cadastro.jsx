@@ -97,7 +97,6 @@ function Cadastro() {
             type="password"
             placeholder="Insira sua senha..."
             required
-            autocomplete="off"
           />
           
           <label htmlFor="confirmPassword">Confirmar senha</label>
